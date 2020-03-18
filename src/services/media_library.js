@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 const BASE_URL = "http://localhost:3000/api"
-export const getSubDirectory = async (parentId) => {
+export const getSubDirectory = async (parentId, isDirectory=true) => {
   const query = {
     where: {
       parent_id: parentId,
-      is_directory: true
+      is_directory: isDirectory
     }
   }
 
@@ -15,4 +15,12 @@ export const getSubDirectory = async (parentId) => {
 
 export const createNewFolder = async (folder) => {
   return axios.post(`${BASE_URL}/media_libs`, folder)
+}
+
+export const fileUpload = async (file) => {
+  return axios.post(`${BASE_URL}/file_uploads/media/upload`, file, {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+  })
 }
